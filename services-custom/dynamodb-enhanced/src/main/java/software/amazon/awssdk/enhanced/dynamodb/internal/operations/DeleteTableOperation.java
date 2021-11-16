@@ -37,6 +37,11 @@ public class DeleteTableOperation<T> implements TableOperation<T, DeleteTableReq
     }
 
     @Override
+    public OperationType operationType() {
+        return OperationType.DELETE_ITEM;
+    }
+
+    @Override
     public DeleteTableRequest generateRequest(TableSchema<T> tableSchema,
                                               OperationContext operationContext,
                                               DynamoDbEnhancedClientExtension extension) {

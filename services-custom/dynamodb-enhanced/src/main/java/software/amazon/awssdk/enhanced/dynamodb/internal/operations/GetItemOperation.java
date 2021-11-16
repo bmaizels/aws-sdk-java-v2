@@ -58,6 +58,11 @@ public class GetItemOperation<T> implements TableOperation<T, GetItemRequest, Ge
     }
 
     @Override
+    public OperationType operationType() {
+        return OperationType.GET_ITEM;
+    }
+
+    @Override
     public GetItemRequest generateRequest(TableSchema<T> tableSchema,
                                           OperationContext context,
                                           DynamoDbEnhancedClientExtension extension) {

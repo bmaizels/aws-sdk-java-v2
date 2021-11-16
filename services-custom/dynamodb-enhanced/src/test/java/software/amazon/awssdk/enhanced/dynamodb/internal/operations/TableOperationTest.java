@@ -68,6 +68,11 @@ public class TableOperationTest {
         private DynamoDbClient lastDynamoDbClient = null;
 
         @Override
+        public OperationType operationType() {
+            return OperationType.ANY;
+        }
+
+        @Override
         public String generateRequest(TableSchema<FakeItem> tableSchema, OperationContext context,
                                       DynamoDbEnhancedClientExtension extension) {
             return null;

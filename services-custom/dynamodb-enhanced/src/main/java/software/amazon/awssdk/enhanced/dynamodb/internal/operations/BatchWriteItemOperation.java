@@ -49,6 +49,11 @@ public class BatchWriteItemOperation
     }
 
     @Override
+    public OperationType operationType() {
+        return OperationType.BATCH_WRITE_ITEM;
+    }
+
+    @Override
     public BatchWriteItemRequest generateRequest(DynamoDbEnhancedClientExtension extension) {
         Map<String, List<WriteRequest>> allRequestItems = new HashMap<>();
 

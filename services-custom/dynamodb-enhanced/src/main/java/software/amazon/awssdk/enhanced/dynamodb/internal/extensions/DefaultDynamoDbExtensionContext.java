@@ -22,6 +22,7 @@ import software.amazon.awssdk.enhanced.dynamodb.DynamoDbExtensionContext;
 import software.amazon.awssdk.enhanced.dynamodb.OperationContext;
 import software.amazon.awssdk.enhanced.dynamodb.TableMetadata;
 import software.amazon.awssdk.enhanced.dynamodb.TableSchema;
+import software.amazon.awssdk.enhanced.dynamodb.internal.operations.OperationType;
 import software.amazon.awssdk.services.dynamodb.model.AttributeValue;
 
 /**
@@ -35,12 +36,14 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
     private final OperationContext operationContext;
     private final TableMetadata tableMetadata;
     private final TableSchema<?> tableSchema;
+    private final OperationType operationType;
 
     private DefaultDynamoDbExtensionContext(Builder builder) {
         this.items = builder.items;
         this.operationContext = builder.operationContext;
         this.tableMetadata = builder.tableMetadata;
         this.tableSchema = builder.tableSchema;
+        this.operationType = builder.operationType != null ? builder.operationType : OperationType.ANY;
     }
 
     public static Builder builder() {
@@ -68,6 +71,11 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
     }
 
     @Override
+    public OperationType operationType() {
+        return operationType;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -87,7 +95,10 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
         if (!Objects.equals(tableMetadata, that.tableMetadata)) {
             return false;
         }
-        return Objects.equals(tableSchema, that.tableSchema);
+        if (!Objects.equals(tableSchema, that.tableSchema)) {
+            return false;
+        }
+        return Objects.equals(operationType, that.operationType);
     }
 
     @Override
@@ -96,6 +107,7 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
         result = 31 * result + (operationContext != null ? operationContext.hashCode() : 0);
         result = 31 * result + (tableMetadata != null ? tableMetadata.hashCode() : 0);
         result = 31 * result + (tableSchema != null ? tableSchema.hashCode() : 0);
+        result = 31 * result + (operationType != null ? operationType.hashCode() : 0);
         return result;
     }
 
@@ -104,6 +116,7 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
         private OperationContext operationContext;
         private TableMetadata tableMetadata;
         private TableSchema<?> tableSchema;
+        private OperationType operationType;
 
         public Builder items(Map<String, AttributeValue> item) {
             this.items = item;
@@ -122,6 +135,11 @@ public final class DefaultDynamoDbExtensionContext implements DynamoDbExtensionC
 
         public Builder tableSchema(TableSchema<?> tableSchema) {
             this.tableSchema = tableSchema;
+            return this;
+        }
+
+        public Builder operationType(OperationType operationType) {
+            this.operationType = operationType;
             return this;
         }
 

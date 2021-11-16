@@ -104,6 +104,7 @@ public final class ChainExtension implements DynamoDbEnhancedClientExtension {
                                                .operationContext(context.operationContext())
                                                .tableMetadata(context.tableMetadata())
                                                .tableSchema(context.tableSchema())
+                                               .operationType(context.operationType())
                                                .build();
 
             WriteModification writeModification = extension.beforeWrite(beforeWrite);

@@ -50,6 +50,11 @@ public class QueryOperation<T> implements PaginatedTableOperation<T, QueryReques
     }
 
     @Override
+    public OperationType operationType() {
+        return OperationType.QUERY;
+    }
+
+    @Override
     public QueryRequest generateRequest(TableSchema<T> tableSchema,
                                         OperationContext operationContext,
                                         DynamoDbEnhancedClientExtension extension) {

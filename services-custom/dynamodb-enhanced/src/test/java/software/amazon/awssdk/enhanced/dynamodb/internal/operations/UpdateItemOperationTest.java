@@ -411,6 +411,7 @@ public class UpdateItemOperationTest {
                                                                                                .tableSchema(FakeItem.getTableSchema())
                                                                                                .tableMetadata(FakeItem.getTableMetadata())
                                                                                                .operationContext(PRIMARY_CONTEXT)
+                                                                                               .operationType(OperationType.UPDATE_ITEM)
                                                                                                .items(baseMap).build());
     }
 
